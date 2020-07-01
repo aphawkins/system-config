@@ -4,6 +4,11 @@ sudo apt update -y
 sudo apt autoremove -y
 sudo apt upgrade -y
 
+# VSCode
+sudo -s
+. <( wget -O - https://code.headmelted.com/installers/apt.sh )
+exit
+
 # Plex
 # https://pimylifeup.com/raspberry-pi-plex-server/
 sudo apt-get install apt-transport-https
