@@ -27,6 +27,12 @@ if [ ! -f "$SSHPUBFILE" ]; then
 fi
 cat $SSHPUBFILE
 
+# git
+git config --global user.name "Andy Hawkins"
+git config --global user.email "aph828@gmail.com"
+git config --global core.autocrlf input
+git config --global fetch.prune true
+
 # VSCode
 sudo -s
 . <( wget -O - https://code.headmelted.com/installers/apt.sh )
