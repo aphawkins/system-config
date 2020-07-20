@@ -31,13 +31,13 @@ sudo grep -qF -- "$ALIAS" "$ALIASFILE" || echo "$ALIAS" >> "$ALIASFILE"
 
 # NAS Mounts
 sudo mkdir /mnt/media-dad
-sudo mount -t cifs -o vers=1.0,username="guest",password="" "//192.168.2.2/sdb1(sdb1)/MEDIA-DAD/Dad" /mnt/media-dad
+sudo mount -t cifs -o vers=1.0,username="guest",password="" '//192.168.2.2/sdb1\(sdb1\)/MEDIA-DAD/Dad' '/mnt/media-dad'
 sudo mkdir /mnt/media-kids
-sudo mount -t cifs -o vers=1.0,username="guest",password="" "//192.168.2.2/sda1(sda1)/MEDIA" /mnt/media-kids
-ALIAS='alias mountmedia="sudo mount -t cifs -o vers=1.0,username=\"guest\",password=\"\" \"//192.168.2.2/sdb1(sdb1)/MEDIA-DAD/Dad\" /mnt/media-dad && sudo mount -t cifs -o vers=1.0,username=\"guest\",password=\"\" \"//192.168.2.2/sda1(sda1)/MEDIA\" /mnt/media-kids"'
+sudo mount -t cifs -o vers=1.0,username="guest",password="" '//192.168.2.2/sda1\(sda1\)/MEDIA' '/mnt/media-kids'
+ALIAS='alias mountmedia="sudo mount -t cifs -o vers=1.0,username=\"guest\",password=\"\" '//192.168.2.2/sdb1(sdb1)/MEDIA-DAD/Dad' '/mnt/media-dad' && sudo mount -t cifs -o vers=1.0,username=\"guest\",password=\"\" '//192.168.2.2/sda1(sda1)/MEDIA' '/mnt/media-kids'"'
 sudo grep -qF -- "$ALIAS" "$ALIASFILE" || echo "$ALIAS" >> "$ALIASFILE"
 
-# Persist the mounts ** BREAKS BOOT **
+# Persist the mounts ** DO NOT - BREAKS BOOT **
 #FILE=/etc/fstab
 #LINE="//192.168.2.2/sdb1(sdb1)/MEDIA-DAD/Dad /mnt/media-dad cifs,vers=1.0 guest 0 0"
 #sudo grep -qF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
