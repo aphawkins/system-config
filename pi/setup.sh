@@ -31,9 +31,9 @@ sudo grep -qF -- "$ALIAS" "$ALIASFILE" || echo "$ALIAS" >> "$ALIASFILE"
 
 # NAS Mounts
 sudo mkdir /mnt/media-dad
-sudo mount -t cifs -o vers=1.0,username="guest",password="" '//192.168.2.2/sdb1\(sdb1\)/MEDIA-DAD/Dad' '/mnt/media-dad'
+sudo mount -t cifs -o vers=1.0,username="guest",password="" '//192.168.2.2/sdb1(sdb1)/MEDIA-DAD/Dad' '/mnt/media-dad'
 sudo mkdir /mnt/media-kids
-sudo mount -t cifs -o vers=1.0,username="guest",password="" '//192.168.2.2/sda1\(sda1\)/MEDIA' '/mnt/media-kids'
+sudo mount -t cifs -o vers=1.0,username="guest",password="" '//192.168.2.2/sda1(sda1)/MEDIA' '/mnt/media-kids'
 ALIAS='alias mountmedia="sudo mount -t cifs -o vers=1.0,username=\"guest\",password=\"\" '//192.168.2.2/sdb1(sdb1)/MEDIA-DAD/Dad' '/mnt/media-dad' && sudo mount -t cifs -o vers=1.0,username=\"guest\",password=\"\" '//192.168.2.2/sda1(sda1)/MEDIA' '/mnt/media-kids'"'
 sudo grep -qF -- "$ALIAS" "$ALIASFILE" || echo "$ALIAS" >> "$ALIASFILE"
 
@@ -57,13 +57,58 @@ git config --global fetch.prune true
 #. <( wget -O - https://code.headmelted.com/installers/apt.sh )
 #exit
 
-# Plex
+# Docker
+curl -fsSL https://get.docker.com -o get-docker.sh
+sudo sh get-docker.sh
+sudo usermod -aG docker pi
+docker version
+docker info
+
+# Plex Docker
+sudo mkdir -p /home/pi/.plex/config
+docker run \
+  --name=plex \
+  --net=host \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e VERSION=docker \
+  -e PLEX_CLAIM='' \
+  -v "/home/pi/.plex/config":/config \
+  -v "/mnt/media-dad":/media-dad \
+  -v "/mnt/media-kids":/media-kids \
+  --restart unless-stopped \
+  linuxserver/plex
+
+# Plex Install
 # https://pimylifeup.com/raspberry-pi-plex-server/
-sudo apt-get install apt-transport-https
-curl https://downloads.plex.tv/plex-keys/PlexSign.key | sudo apt-key add -
-echo deb https://downloads.plex.tv/repo/deb public main | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
-sudo apt-get update
-sudo apt-get install plexmediaserver
+# sudo apt-get install apt-transport-https
+# curl https://downloads.plex.tv/plex-keys/PlexSign.key | sudo apt-key add -
+# echo deb https://downloads.plex.tv/repo/deb public main | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
+# sudo apt-get update
+# sudo apt-get install plexmediaserver
+
+# Deluge Docker
+sudo mkdir -p "/home/pi/.deluge/config"
+sudo chmod aog+rwx "/home/pi/.deluge/config"
+sudo mkdir -p "/home/pi/.deluge/downloads"
+sudo chmod aog+rwx "/home/pi/.deluge/downloads"
+sudo mkdir -p "/home/pi/.deluge/completed"
+sudo chmod aog+rwx "/home/pi/.deluge/completed"
+docker run \
+  -d \
+  --name=deluge \
+  --net=host \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=Europe/London \
+  -e UMASK_SET=022 \
+  -e DELUGE_LOGLEVEL=error \
+  -v "/home/pi/.deluge/config":/config \
+  -v "/home/pi/.deluge/downloads":/downloads \
+  -v "/home/pi/.deluge/completed":/completed \
+  --restart unless-stopped \
+  linuxserver/deluge
+
 
 # Transmission
 sudo apt install transmission-daemon
