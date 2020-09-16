@@ -30,12 +30,12 @@ sudo grep -qF -- "$ALIAS" "$ALIASFILE" || echo "$ALIAS" >> "$ALIASFILE"
 #cat $SSHPUBFILE
 
 # NAS Mounts
-sudo mkdir /mnt/media-dad
-sudo mount -t cifs -o vers=1.0,username="guest",password="" '//192.168.2.2/sdb1(sdb1)/MEDIA-DAD/Dad' '/mnt/media-dad'
-sudo mkdir /mnt/media-kids
-sudo mount -t cifs -o vers=1.0,username="guest",password="" '//192.168.2.2/sda1(sda1)/MEDIA' '/mnt/media-kids'
-ALIAS='alias mountmedia="sudo mount -t cifs -o vers=1.0,username=\"guest\",password=\"\" '//192.168.2.2/sdb1(sdb1)/MEDIA-DAD/Dad' '/mnt/media-dad' && sudo mount -t cifs -o vers=1.0,username=\"guest\",password=\"\" '//192.168.2.2/sda1(sda1)/MEDIA' '/mnt/media-kids'"'
-sudo grep -qF -- "$ALIAS" "$ALIASFILE" || echo "$ALIAS" >> "$ALIASFILE"
+# sudo mkdir /mnt/media-dad
+# sudo mount -t cifs -o vers=1.0,username="guest",password="" '//192.168.2.2/sdb1(sdb1)/MEDIA-DAD/Dad' '/mnt/media-dad'
+# sudo mkdir /mnt/media-kids
+# sudo mount -t cifs -o vers=1.0,username="guest",password="" '//192.168.2.2/sda1(sda1)/MEDIA' '/mnt/media-kids'
+# ALIAS='alias mountmedia="sudo mount -t cifs -o vers=1.0,username=\"guest\",password=\"\" '//192.168.2.2/sdb1(sdb1)/MEDIA-DAD/Dad' '/mnt/media-dad' && sudo mount -t cifs -o vers=1.0,username=\"guest\",password=\"\" '//192.168.2.2/sda1(sda1)/MEDIA' '/mnt/media-kids'"'
+# sudo grep -qF -- "$ALIAS" "$ALIASFILE" || echo "$ALIAS" >> "$ALIASFILE"
 
 # Persist the mounts ** DO NOT - BREAKS BOOT **
 #FILE=/etc/fstab
@@ -74,8 +74,8 @@ docker run \
   -e VERSION=docker \
   -e PLEX_CLAIM='' \
   -v "/home/pi/.plex/config":/config \
-  -v "/mnt/media-dad":/media-dad \
-  -v "/mnt/media-kids":/media-kids \
+  -v "/media/pi/EXT1/MEDIA-DAD/Dad":/media-dad \
+  -v "/media/pi/EXT0/MEDIA/Kids":/media-kids \
   --restart unless-stopped \
   linuxserver/plex
 
@@ -111,26 +111,26 @@ docker run \
 
 
 # Transmission
-sudo apt install transmission-daemon
-sudo systemctl stop transmission-daemon
-sudo mkdir -p /media/transmission/torrent-inprogress
-sudo mkdir -p /media/transmission/torrent-complete
-sudo chown -R pi:pi /media/transmission/torrent-inprogress
-sudo chown -R pi:pi /media/transmission/torrent-complete
-sudo nano /etc/transmission-daemon/settings.json
-# "download-dir": "/media/transmission/torrent_complete",
-# "incomplete-dir": "/media/transmission/torrent-inprogress",
-# "incomplete-dir-enabled": true,
-# "rpc-password": "Your_Password",
-# "rpc-username": "Your_Username",
-# "rpc-whitelist": "192.168.*.*",
-sudo nano /etc/init.d/transmission-daemon
-# USER=pi
-sudo nano /etc/systemd/system/multi-user.target.wants/transmission-daemon.service
-# user=pi
-sudo systemctl daemon-reload
-sudo chown -R pi:pi /etc/transmission-daemon
-sudo mkdir -p /home/pi/.config/transmission-daemon/
-sudo ln -s /etc/transmission-daemon/settings.json /home/pi/.config/transmission-daemon/
-sudo chown -R pi:pi /home/pi/.config/transmission-daemon/
-sudo systemctl start transmission-daemon
+# sudo apt install transmission-daemon
+# sudo systemctl stop transmission-daemon
+# sudo mkdir -p /media/transmission/torrent-inprogress
+# sudo mkdir -p /media/transmission/torrent-complete
+# sudo chown -R pi:pi /media/transmission/torrent-inprogress
+# sudo chown -R pi:pi /media/transmission/torrent-complete
+# sudo nano /etc/transmission-daemon/settings.json
+# # "download-dir": "/media/transmission/torrent_complete",
+# # "incomplete-dir": "/media/transmission/torrent-inprogress",
+# # "incomplete-dir-enabled": true,
+# # "rpc-password": "Your_Password",
+# # "rpc-username": "Your_Username",
+# # "rpc-whitelist": "192.168.*.*",
+# sudo nano /etc/init.d/transmission-daemon
+# # USER=pi
+# sudo nano /etc/systemd/system/multi-user.target.wants/transmission-daemon.service
+# # user=pi
+# sudo systemctl daemon-reload
+# sudo chown -R pi:pi /etc/transmission-daemon
+# sudo mkdir -p /home/pi/.config/transmission-daemon/
+# sudo ln -s /etc/transmission-daemon/settings.json /home/pi/.config/transmission-daemon/
+# sudo chown -R pi:pi /home/pi/.config/transmission-daemon/
+# sudo systemctl start transmission-daemon
