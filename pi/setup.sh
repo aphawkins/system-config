@@ -73,23 +73,15 @@ docker run \
   -e PGID=1000 \
   -e VERSION=docker \
   -e PLEX_CLAIM='' \
-  -v "/home/pi/.plex/config":/config \
-  -v "/media/pi/EXT1/MEDIA-DAD/Dad":/media-dad \
-  -v "/media/pi/EXT0/MEDIA/Kids":/media-kids \
+  -v "/media/pi/EXT0/.plex/config":/config \
+  -v "/media/pi/EXT1/MEDIA-DAD":/media-dad \
+  -v "/media/pi/EXT0/MEDIA":/media \
   --restart unless-stopped \
-  linuxserver/plex
-
-# Plex Install
-# https://pimylifeup.com/raspberry-pi-plex-server/
-# sudo apt-get install apt-transport-https
-# curl https://downloads.plex.tv/plex-keys/PlexSign.key | sudo apt-key add -
-# echo deb https://downloads.plex.tv/repo/deb public main | sudo tee /etc/apt/sources.list.d/plexmediaserver.list
-# sudo apt-get update
-# sudo apt-get install plexmediaserver
+  linuxserver/plex:bionic
 
 # Deluge Docker
-sudo mkdir -p "/home/pi/.deluge/config"
-sudo chmod aog+rwx "/home/pi/.deluge/config"
+# sudo mkdir -p "/home/pi/.deluge/config"
+# sudo chmod aog+rwx "/home/pi/.deluge/config"
 sudo mkdir -p "/home/pi/.deluge/downloads"
 sudo chmod aog+rwx "/home/pi/.deluge/downloads"
 sudo mkdir -p "/home/pi/.deluge/completed"
@@ -103,34 +95,31 @@ docker run \
   -e TZ=Europe/London \
   -e UMASK_SET=022 \
   -e DELUGE_LOGLEVEL=error \
-  -v "/home/pi/.deluge/config":/config \
+  -v "/media/pi/EXT0/.deluge/config":/config \
   -v "/home/pi/.deluge/downloads":/downloads \
   -v "/home/pi/.deluge/completed":/completed \
   --restart unless-stopped \
   linuxserver/deluge
 
+# SAMBA share
+# [media-dad]
+# comment = Dad media shared folder
+# path = /media/pi/EXT1/MEDIA-DAD/Dad
+# browseable = yes
+# writeable = Yes
+# only guest = no
+# create mask = 0777
+# directory mask = 0777
+# public = yes
+# guest ok = yes
 
-# Transmission
-# sudo apt install transmission-daemon
-# sudo systemctl stop transmission-daemon
-# sudo mkdir -p /media/transmission/torrent-inprogress
-# sudo mkdir -p /media/transmission/torrent-complete
-# sudo chown -R pi:pi /media/transmission/torrent-inprogress
-# sudo chown -R pi:pi /media/transmission/torrent-complete
-# sudo nano /etc/transmission-daemon/settings.json
-# # "download-dir": "/media/transmission/torrent_complete",
-# # "incomplete-dir": "/media/transmission/torrent-inprogress",
-# # "incomplete-dir-enabled": true,
-# # "rpc-password": "Your_Password",
-# # "rpc-username": "Your_Username",
-# # "rpc-whitelist": "192.168.*.*",
-# sudo nano /etc/init.d/transmission-daemon
-# # USER=pi
-# sudo nano /etc/systemd/system/multi-user.target.wants/transmission-daemon.service
-# # user=pi
-# sudo systemctl daemon-reload
-# sudo chown -R pi:pi /etc/transmission-daemon
-# sudo mkdir -p /home/pi/.config/transmission-daemon/
-# sudo ln -s /etc/transmission-daemon/settings.json /home/pi/.config/transmission-daemon/
-# sudo chown -R pi:pi /home/pi/.config/transmission-daemon/
-# sudo systemctl start transmission-daemon
+# [media]
+# comment = Media shared folder
+# path = /media/pi/EXT0/MEDIA
+# browseable = yes
+# writeable = Yes
+# only guest = no
+# create mask = 0777
+# directory mask = 0777
+# public = yes
+# guest ok = yes
