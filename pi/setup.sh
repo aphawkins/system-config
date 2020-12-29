@@ -7,9 +7,16 @@ sudo apt update -y
 sudo apt autoremove -y
 sudo apt full-upgrade -y
 
+# Apt
+sudo apt install chromium-browser -y
+sudo apt install git -y
+sudo apt install gparted -y
+sudo apt install neofetch -y
+sudo apt install vlc -y
+
 # Static IP
 STATICIPFILE=/boot/cmdline.txt
-STATICIP='ip=192.168.2.3'
+STATICIP='ip=192.168.1.100'
 sudo grep -qF -- "$STATICIP" "$STATICIPFILE" || echo "$STATICIP" >> "$STATICIPFILE"
 
 # Aliases
@@ -25,7 +32,7 @@ sudo grep -qF -- "$ALIAS" "$ALIASFILE" || echo "$ALIAS" >> "$ALIASFILE"
 # ssh key
 #SSHPUBFILE=/home/pi/.ssh/id_rsa.pub
 #if [ ! -f "$SSHPUBFILE" ]; then
-#    ssh-keygen -C "andy@raspberrypi"
+#    ssh-keygen -C "aph828@gmail.com"
 #fi
 #cat $SSHPUBFILE
 
@@ -36,13 +43,6 @@ sudo grep -qF -- "$ALIAS" "$ALIASFILE" || echo "$ALIAS" >> "$ALIASFILE"
 # sudo mount -t cifs -o vers=1.0,username="guest",password="" '//192.168.2.2/sda1(sda1)/MEDIA' '/mnt/media-kids'
 # ALIAS='alias mountmedia="sudo mount -t cifs -o vers=1.0,username=\"guest\",password=\"\" '//192.168.2.2/sdb1(sdb1)/MEDIA-DAD/Dad' '/mnt/media-dad' && sudo mount -t cifs -o vers=1.0,username=\"guest\",password=\"\" '//192.168.2.2/sda1(sda1)/MEDIA' '/mnt/media-kids'"'
 # sudo grep -qF -- "$ALIAS" "$ALIASFILE" || echo "$ALIAS" >> "$ALIASFILE"
-
-# Persist the mounts ** DO NOT - BREAKS BOOT **
-#FILE=/etc/fstab
-#LINE="//192.168.2.2/sdb1(sdb1)/MEDIA-DAD/Dad /mnt/media-dad cifs,vers=1.0 guest 0 0"
-#sudo grep -qF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
-#LINE="//192.168.2.2/sda1(sda1)/MEDIA /mnt/media-kids cifs,vers=1.0 guest 0 0"
-#sudo grep -qF -- "$LINE" "$FILE" || echo "$LINE" >> "$FILE"
 
 # git
 git config --global user.name "Andy Hawkins"
