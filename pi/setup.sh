@@ -9,9 +9,12 @@ sudo apt full-upgrade -y
 
 # Apt
 sudo apt install chromium-browser -y
+sudo apt install curl -y
 sudo apt install git -y
 sudo apt install gparted -y
 sudo apt install neofetch -y
+sudo apt install net-tools -y
+sudo apt install samba -y
 sudo apt install vlc -y
 
 # Static IP
@@ -65,27 +68,26 @@ docker version
 docker info
 
 # Plex Docker
-sudo mkdir -p /home/pi/.plex/config
 docker run \
+  -d \
   --name=plex \
   --net=host \
   -e PUID=1000 \
   -e PGID=1000 \
   -e VERSION=docker \
   -e PLEX_CLAIM='' \
-  -v "/media/pi/EXT0/.plex/config":/config \
-  -v "/media/pi/EXT1/MEDIA-DAD":/media-dad \
-  -v "/media/pi/EXT0/MEDIA":/media \
+  -v "/media/andy/EXT0/.plex/config":/config \
+  -v "/media/andy/EXT1/MEDIA-DAD":/media-dad \
+  -v "/media/andy/EXT0/MEDIA":/media \
   --restart unless-stopped \
-  linuxserver/plex:bionic
+  linuxserver/plex
 
 # Deluge Docker
-# sudo mkdir -p "/home/pi/.deluge/config"
-# sudo chmod aog+rwx "/home/pi/.deluge/config"
-sudo mkdir -p "/home/pi/.deluge/downloads"
-sudo chmod aog+rwx "/home/pi/.deluge/downloads"
-sudo mkdir -p "/home/pi/.deluge/completed"
-sudo chmod aog+rwx "/home/pi/.deluge/completed"
+sudo chmod aog+rwx "/home/andy/.deluge"
+sudo mkdir -p "/home/andy/.deluge/downloads"
+sudo chmod aog+rwx "/home/andy/.deluge/downloads"
+sudo mkdir -p "/home/andy/.deluge/completed"
+sudo chmod aog+rwx "/home/andy/.deluge/completed"
 docker run \
   -d \
   --name=deluge \
@@ -95,16 +97,18 @@ docker run \
   -e TZ=Europe/London \
   -e UMASK_SET=022 \
   -e DELUGE_LOGLEVEL=error \
-  -v "/media/pi/EXT0/.deluge/config":/config \
-  -v "/home/pi/.deluge/downloads":/downloads \
-  -v "/home/pi/.deluge/completed":/completed \
+  -v "/media/andy/EXT0/.deluge/config":/config \
+  -v "/home/andy/.deluge/downloads":/downloads \
+  -v "/home/andy/.deluge/completed":/completed \
   --restart unless-stopped \
   linuxserver/deluge
 
 # SAMBA share
+# sudo nano /etc/samba/smb.conf
+
 # [media-dad]
 # comment = Dad media shared folder
-# path = /media/pi/EXT1/MEDIA-DAD/Dad
+# path = /media/andy/EXT1/MEDIA-DAD/Dad
 # browseable = yes
 # writeable = Yes
 # only guest = no
@@ -115,7 +119,7 @@ docker run \
 
 # [media]
 # comment = Media shared folder
-# path = /media/pi/EXT0/MEDIA
+# path = /media/andy/EXT0/MEDIA
 # browseable = yes
 # writeable = Yes
 # only guest = no
@@ -123,3 +127,6 @@ docker run \
 # directory mask = 0777
 # public = yes
 # guest ok = yes
+
+sudo service smbd restart
+sudo ufw allow samba
