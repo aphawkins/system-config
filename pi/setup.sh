@@ -110,23 +110,26 @@ docker run \
 # comment = Dad media shared folder
 # path = /media/andy/EXT1/MEDIA-DAD/Dad
 # browseable = yes
-# writeable = Yes
-# only guest = no
+# read only = no
 # create mask = 0777
 # directory mask = 0777
 # public = yes
 # guest ok = yes
+# force user = andy
+# force group = andy
 
 # [media]
 # comment = Media shared folder
 # path = /media/andy/EXT0/MEDIA
 # browseable = yes
-# writeable = Yes
-# only guest = no
+# read only = no
 # create mask = 0777
 # directory mask = 0777
 # public = yes
 # guest ok = yes
+# force user = andy
+# force group = andy
 
-sudo service smbd restart
-sudo ufw allow samba
+# sudo smbpasswd -a andy
+# sudo service smbd restart
+# sudo ufw allow samba
