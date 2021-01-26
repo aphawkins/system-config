@@ -14,6 +14,7 @@ sudo apt install git -y
 sudo apt install gparted -y
 sudo apt install neofetch -y
 sudo apt install net-tools -y
+sudo apt install pinta -y
 sudo apt install samba -y
 sudo apt install vlc -y
 
@@ -67,41 +68,19 @@ sudo usermod -aG docker pi
 docker version
 docker info
 
-# Plex Docker
-docker run \
-  -d \
-  --name=plex \
-  --net=host \
-  -e PUID=1000 \
-  -e PGID=1000 \
-  -e VERSION=docker \
-  -e PLEX_CLAIM='' \
-  -v "/media/andy/EXT0/.plex/config":/config \
-  -v "/media/andy/EXT1/MEDIA-DAD":/media-dad \
-  -v "/media/andy/EXT0/MEDIA":/media \
-  --restart unless-stopped \
-  linuxserver/plex
-
 # Deluge Docker
+sudo mkdir -p "/home/andy/.deluge"
 sudo chmod aog+rwx "/home/andy/.deluge"
 sudo mkdir -p "/home/andy/.deluge/downloads"
 sudo chmod aog+rwx "/home/andy/.deluge/downloads"
 sudo mkdir -p "/home/andy/.deluge/completed"
 sudo chmod aog+rwx "/home/andy/.deluge/completed"
-docker run \
-  -d \
-  --name=deluge \
-  --net=host \
-  -e PUID=1000 \
-  -e PGID=1000 \
-  -e TZ=Europe/London \
-  -e UMASK_SET=022 \
-  -e DELUGE_LOGLEVEL=error \
-  -v "/media/andy/EXT0/.deluge/config":/config \
-  -v "/home/andy/.deluge/downloads":/downloads \
-  -v "/home/andy/.deluge/completed":/completed \
-  --restart unless-stopped \
-  linuxserver/deluge
+
+# Sonarr Docker
+sudo mkdir -p "/home/andy/.sonarr"
+sudo chmod aog+rwx "/home/andy/.sonarr"
+sudo mkdir -p "/home/andy/.sonarr/tv"
+sudo chmod aog+rwx "/home/andy/.sonarr/tv"
 
 # SAMBA share
 # sudo nano /etc/samba/smb.conf
