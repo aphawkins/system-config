@@ -11,7 +11,7 @@ services:
       - VERSION=docker
     volumes:
       - /media/andy/EXT0/.plex/config:/config
-      - /media/andy/EXT1/MEDIA-DAD:/media-dad
+      - /media/andy/NAS:/media-dad
       - /media/andy/EXT0/MEDIA:/media
     restart: unless-stopped
 
@@ -27,22 +27,22 @@ services:
       - DELUGE_LOGLEVEL=error #optional
     volumes:
       - /media/andy/EXT0/.deluge/config:/config
-      - /home/andy/.deluge/downloads:/downloads
-      - /home/andy/.deluge/completed:/completed
+      - /media/andy/EXT0/.deluge/downloads:/downloads
+      - /media/andy/EXT0/.deluge/completed:/completed
     restart: unless-stopped
 
-  sonarr:
-    image: ghcr.io/linuxserver/sonarr
-    container_name: sonarr
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-      - UMASK_SET=022 #optional
-    volumes:
-      - /media/andy/EXT0/.sonarr/config:/config
-      - /home/andy/.sonarr/tv:/tv
-      - /home/andy/.deluge/downloads:/downloads
-    ports:
-      - 8989:8989
-    restart: unless-stopped
+  # sonarr:
+  #   image: ghcr.io/linuxserver/sonarr
+  #   container_name: sonarr
+  #   environment:
+  #     - PUID=1000
+  #     - PGID=1000
+  #     - TZ=Europe/London
+  #     - UMASK_SET=022 #optional
+  #   volumes:
+  #     - /media/andy/EXT0/.sonarr/config:/config
+  #     - /home/andy/.sonarr/tv:/tv
+  #     - /home/andy/.deluge/downloads:/downloads
+  #   ports:
+  #     - 8989:8989
+  #   restart: unless-stopped

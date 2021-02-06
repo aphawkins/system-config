@@ -24,14 +24,14 @@ STATICIP='ip=192.168.1.100'
 sudo grep -qF -- "$STATICIP" "$STATICIPFILE" || echo "$STATICIP" >> "$STATICIPFILE"
 
 # Aliases
-ALIASFILE=/home/pi/.bash_aliases
-touch $FILE
-ALIAS='alias la="ls -a"'
-sudo grep -qF -- "$ALIAS" "$ALIASFILE" || echo "$ALIAS" >> "$ALIASFILE"
-ALIAS='alias ll="ls -la"'
-sudo grep -qF -- "$ALIAS" "$ALIASFILE" || echo "$ALIAS" >> "$ALIASFILE"
-ALIAS='alias l="ls -CF"'
-sudo grep -qF -- "$ALIAS" "$ALIASFILE" || echo "$ALIAS" >> "$ALIASFILE"
+# ALIASFILE=/home/pi/.bash_aliases
+# touch $FILE
+# ALIAS='alias la="ls -a"'
+# sudo grep -qF -- "$ALIAS" "$ALIASFILE" || echo "$ALIAS" >> "$ALIASFILE"
+# ALIAS='alias ll="ls -la"'
+# sudo grep -qF -- "$ALIAS" "$ALIASFILE" || echo "$ALIAS" >> "$ALIASFILE"
+# ALIAS='alias l="ls -CF"'
+# sudo grep -qF -- "$ALIAS" "$ALIASFILE" || echo "$ALIAS" >> "$ALIASFILE"
 
 # ssh key
 #SSHPUBFILE=/home/pi/.ssh/id_rsa.pub
@@ -69,25 +69,29 @@ docker version
 docker info
 
 # Deluge Docker
-sudo mkdir -p "/home/andy/.deluge"
-sudo chmod aog+rwx "/home/andy/.deluge"
-sudo mkdir -p "/home/andy/.deluge/downloads"
-sudo chmod aog+rwx "/home/andy/.deluge/downloads"
-sudo mkdir -p "/home/andy/.deluge/completed"
-sudo chmod aog+rwx "/home/andy/.deluge/completed"
+# sudo mkdir -p "/home/andy/.deluge"
+# sudo chmod aog+rwx "/home/andy/.deluge"
+# sudo mkdir -p "/home/andy/.deluge/downloads"
+# sudo chmod aog+rwx "/home/andy/.deluge/downloads"
+# sudo mkdir -p "/home/andy/.deluge/completed"
+# sudo chmod aog+rwx "/home/andy/.deluge/completed"
 
 # Sonarr Docker
-sudo mkdir -p "/home/andy/.sonarr"
-sudo chmod aog+rwx "/home/andy/.sonarr"
-sudo mkdir -p "/home/andy/.sonarr/tv"
-sudo chmod aog+rwx "/home/andy/.sonarr/tv"
+# sudo mkdir -p "/home/andy/.sonarr"
+# sudo chmod aog+rwx "/home/andy/.sonarr"
+# sudo mkdir -p "/home/andy/.sonarr/tv"
+# sudo chmod aog+rwx "/home/andy/.sonarr/tv"
+
+# Mounts
+sudo mkdir -p "/mnt/nas"
+sudo chmod aog+rwx "/mnt/nas"
 
 # SAMBA share
 # sudo nano /etc/samba/smb.conf
 
-# [media-dad]
-# comment = Dad media shared folder
-# path = /media/andy/EXT1/MEDIA-DAD/Dad
+# [nas]
+# comment = nas root shared folder
+# path = /media/andy/NAS
 # browseable = yes
 # read only = no
 # create mask = 0777
