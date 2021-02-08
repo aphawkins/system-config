@@ -10,9 +10,8 @@ services:
       - PGID=1000
       - VERSION=docker
     volumes:
-      - /media/andy/EXT0/.plex/config:/config
-      - /media/andy/NAS:/media-dad
-      - /media/andy/EXT0/MEDIA:/media
+      - /mnt/nas/Config/.plex/config:/config
+      - /mnt/nas:/nas
     restart: unless-stopped
 
   deluge:
@@ -26,9 +25,9 @@ services:
       - UMASK_SET=022 #optional
       - DELUGE_LOGLEVEL=error #optional
     volumes:
-      - /media/andy/EXT0/.deluge/config:/config
-      - /media/andy/EXT0/.deluge/downloads:/downloads
-      - /media/andy/EXT0/.deluge/completed:/completed
+      - /mnt/nas/Config/.deluge/config:/config
+      - /mnt/nas/Config/.deluge/downloads:/downloads
+      - /mnt/nas/Config/.deluge/completed:/completed
     restart: unless-stopped
 
   # sonarr:
