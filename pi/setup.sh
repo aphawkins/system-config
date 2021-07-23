@@ -89,9 +89,9 @@ sudo chmod aog+rwx "/mnt/nas"
 # SAMBA share
 # sudo nano /etc/samba/smb.conf
 
-# [nas]
-# comment = nas root shared folder
-# path = /media/andy/NAS
+# [Dad]
+# comment = Dads folder
+# path = /mnt/nas/Dad
 # browseable = yes
 # read only = no
 # create mask = 0777
@@ -101,9 +101,9 @@ sudo chmod aog+rwx "/mnt/nas"
 # force user = andy
 # force group = andy
 
-# [media]
-# comment = Media shared folder
-# path = /media/andy/EXT0/MEDIA
+# [Kids]
+# comment = Kids folder
+# path = /mnt/nas/Kids
 # browseable = yes
 # read only = no
 # create mask = 0777
@@ -112,6 +112,19 @@ sudo chmod aog+rwx "/mnt/nas"
 # guest ok = yes
 # force user = andy
 # force group = andy
+
+# [Pictures]
+# comment = Pictures folder
+# path = /mnt/nas/Pictures
+# browseable = yes
+# read only = no
+# create mask = 0777
+# directory mask = 0777
+# public = yes
+# guest ok = yes
+# force user = andy
+# force group = andy
+
 
 # sudo smbpasswd -a andy
 # sudo service smbd restart
